@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
@@ -33,7 +32,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
@@ -60,10 +58,11 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
-    //Variable que controla de la imagen seleccionada
+    // Variable que controla de la imagen seleccionada
     var selectedImageUri by remember {
         mutableStateOf<Uri?>(null)
     }
+    //
     val singlePhotoPikerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri -> selectedImageUri = uri })
@@ -140,6 +139,7 @@ fun ScreenBody(padding: PaddingValues, stateImage: Uri?) {
             contentDescription = "Fondo",
             modifier = Modifier.fillMaxSize()
         )
+        //marco para las fotos subidaS
         Column(modifier = Modifier
             .height(400.dp)
             .fillMaxWidth()
@@ -150,9 +150,10 @@ fun ScreenBody(padding: PaddingValues, stateImage: Uri?) {
                     .fillMaxSize()
                     .padding(padding),
 
+                //Alineamiento vertical
                 verticalArrangement = Arrangement.Bottom
             ) {
-
+                //Item Imagen
                 item {
                     AsyncImage(
                         model = stateImage,
