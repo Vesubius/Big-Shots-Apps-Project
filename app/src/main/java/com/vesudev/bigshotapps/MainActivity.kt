@@ -1,57 +1,42 @@
 package com.vesudev.bigshotapps
 
 
+import android.net.Uri
 import android.os.Bundle
-
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-
-
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-
-
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-
 import androidx.compose.foundation.layout.padding
-
-import androidx.compose.foundation.layout.width
-
-
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
-
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
-
 import androidx.compose.runtime.Composable
-
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-
 import androidx.compose.ui.Modifier
-
-import androidx.compose.ui.res.painterResource
-
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
+import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.vesudev.bigshotapps.ui.theme.BigShotAppsTheme
 
@@ -71,10 +56,19 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
+    //Variable que controla de la imagen seleccionada
+    var selectedImageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+    val singlePhotoPikerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri -> selectedImageUri = uri })
+
     Scaffold(
         //====================== BARRA SUPERIOR ========================================
         topBar = {
             TopAppBar(
+
 
                 //Parametro de Top App Bar
                 title = {
@@ -93,13 +87,17 @@ fun MainScreen() {
         },
 
         //====================== CUERPO DE LA APP =================================
-        content = { paddingValues -> ScreenBody(paddingValues) },
+        content = { paddingValues -> ScreenBody(paddingValues, selectedImageUri) },
 
         //--------------------------Boton Flotante----------------------------
         floatingActionButton = {
 
-            Button(onClick = { /*TODO*/ }) {
-                Text(text = "Subir foto")
+            Button(onClick = {
+                singlePhotoPikerLauncher.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+            }) {
+                Text(text = "Subir Foto")
             }
 
         },
@@ -120,50 +118,40 @@ fun MainScreen() {
                     color = MaterialTheme.colorScheme.onSecondary
                 )
 
+
             }
 
         })
 }
 
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
-fun ScreenBody(padding: PaddingValues) {
+fun ScreenBody(padding: PaddingValues, stateImage: Uri?) {
+
+
     Box(modifier = Modifier.fillMaxSize()) {
         // Imagen de fondo
         Image(
             painter = rememberImagePainter("https://i.pinimg.com/564x/ed/1a/36/ed1a36532ba9a37f71add3dc9d03743f.jpg"),
-            contentDescription = null,
+            contentDescription = "Fondo",
             modifier = Modifier.fillMaxSize()
         )
 
         // ======================== Contenido de la Pantalla ==========================
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ) {
-            Row (modifier = Modifier.padding(bottom = 100.dp)){
 
-                //------------------- Boton Camara ----------------------------------------
-                Image(
-                    modifier = Modifier
-                        .height(80.dp)
-                        .width(80.dp),
-                    painter = painterResource(id = R.drawable.camera),
-                    contentDescription = "Boton Camara",
-                )
-                Spacer(modifier= Modifier.width(20.dp))
-
-                //------------------- Boton Galeria ----------------------------------------
-                Image(
-                    modifier = Modifier
-                        .height(80.dp)
-                        .width(80.dp),
-                    painter = painterResource(id = R.drawable.galery),
-                    contentDescription = "Boton Camara",
+            item {
+                AsyncImage(
+                    model = stateImage,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
 
@@ -174,7 +162,6 @@ fun ScreenBody(padding: PaddingValues) {
 }
 
 
-//
 @Preview
 @Composable
 fun PreviewMainScreen() {
