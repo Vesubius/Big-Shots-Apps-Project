@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "277948023650",
+    "project_id": "bigshotapp-by-vesudev",
+    "storage_bucket": "bigshotapp-by-vesudev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277948023650:android:283c5fdfbae5bae021623b",
+        "android_client_info": {
+          "package_name": "com.vesudev.bigshotapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ7BHne_f0CHrq62ZqDTeaXpFglgSqVRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -69,4 +69,12 @@ dependencies {
 
     //Dependencia para subir cargar imagenes
     implementation("io.coil-kt:coil-compose:2.6.0")
+
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    implementation("com.google.firebase:firebase-analytics")
+
+
+    //Storage de firebase
+    implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
 }
