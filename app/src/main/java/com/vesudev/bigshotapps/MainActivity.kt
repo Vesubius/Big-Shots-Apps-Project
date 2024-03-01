@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
-import com.google.android.gms.common.internal.StringResourceValueReader
 import com.vesudev.bigshotapps.ui.theme.BigShotAppsTheme
 
 
