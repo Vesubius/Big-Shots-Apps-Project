@@ -34,12 +34,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
+import com.google.android.gms.common.internal.StringResourceValueReader
 import com.vesudev.bigshotapps.ui.theme.BigShotAppsTheme
 
 
@@ -79,7 +81,7 @@ fun MainScreen() {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        text = "Big Shot App"
+                        text = stringResource(id = R.string.app_name)
                     )
 
                 },
