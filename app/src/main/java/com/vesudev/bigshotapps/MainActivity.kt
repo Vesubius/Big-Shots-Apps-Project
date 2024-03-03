@@ -63,7 +63,7 @@ fun MainScreen() {
     var selectedImageUri by remember {
         mutableStateOf<Uri?>(null)
     }
-    //
+    // Variable que controla la actividad de lanzamiento del GalleryPiker
     val singlePhotoPikerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri -> selectedImageUri = uri })
